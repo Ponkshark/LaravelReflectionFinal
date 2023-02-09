@@ -16,9 +16,8 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function RetrieveEmployees () {
+        return view('Employees', ['employees' => DB::table('employees')->simplepaginate(10)]);
     }
 
     /**
@@ -26,9 +25,27 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function insertform(){
+        return view('employees');
+    }
+
+    
+    public function insert(Request $request){
+        $request->validate([
+            'firstname'=>'required',
+            'lastname'=>'required',
+            'company'=>'required',
+            'email'=>'required|email',
+            'phone'=>'required',
+        ]); 
+        $firstname = $request->input('firstname');
+        $lastname = $request->input('lastname');
+        $company = $request->input('company');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $data=array('firstname'=>$firstname,"lastname"=>$lastname,"company"=>$company,"email"=>$email,"phone"=>$phone);
+        DB::table('employees')->insert($data);
+        return redirect('/employeessuccess'); 
     }
 
     /**

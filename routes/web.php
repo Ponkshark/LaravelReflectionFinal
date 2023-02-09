@@ -1,9 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\EmployeeController;
 
 /*
@@ -27,22 +25,20 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::get('/companies', [App\Http\Controllers\CompaniesController::class, 'RetrieveCompanies'])->name('companies');
+Route::get('/companies', [App\Http\Controllers\CompanyController::class, 'RetrieveCompanies'])->name('companies');
 
 Auth::routes();
 
-Route::get('/employees', [App\Http\Controllers\EmployeesController::class, 'RetrieveEmployees'])->name('employees');
-
-
+Route::get('/employees', [App\Http\Controllers\EmployeeController::class, 'RetrieveEmployees'])->name('employees');
 
 Route::prefix('employees')->group(function () {
-    Route::get('insert', [EmployeesController::class, 'insertform']);
-    Route::post('create', [EmployeesController::class, 'insert']);
-    Route::post('/post', [EmployeesController::class, 'store']);
+    Route::get('insert', [EmployeeController::class, 'insertform']);
+    Route::post('create', [EmployeeController::class, 'insert']);
+    Route::post('/post', [EmployeeController::class, 'store']);
 });
 Route::prefix('companies')->group(function () {
-    Route::get('insert', [CompaniesController::class, 'insertform']);
-    Route::post('create', [CompaniesController::class, 'insert']);
+    Route::get('insert', [CompanyController::class, 'insertform']);
+    Route::post('create', [CompanyController::class, 'insert']);
 });
 
 Route::resource('employee', EmployeeController::class);
@@ -56,8 +52,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/employeessuccess', [App\Http\Controllers\EmployeesSuccessController::class, 'index'])->name('employeessuccess');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/companiessuccess', [App\Http\Controllers\CompaniesSuccessController::class, 'index'])->name('companiessuccess');

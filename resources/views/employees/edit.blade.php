@@ -1,6 +1,5 @@
 @extends('layouts.app')
 <?php
-use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\EmployeeController;
 use App\Models\Employees;
 ?>

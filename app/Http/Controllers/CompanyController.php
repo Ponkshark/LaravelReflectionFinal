@@ -15,9 +15,8 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function RetrieveCompanies () {
+        return view('Companies', ['companies' => DB::table('companies')->simplepaginate(5)]);
     }
 
     /**
@@ -25,9 +24,24 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function insertform(){
+        return view('companies');
+    }
+
+    public function insert(Request $request){
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'logo'=>'required|dimensions:min_width=100,min_height=100|image',
+            'website'=>'required',
+        ]); 
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $logo = $request->file('logo')->store('public');
+        $website = $request->input('website');
+        $data=array('name'=>$name,"email"=>$email,"logo"=>$logo,"website"=>$website);
+        DB::table('companies')->insert($data);
+        return redirect('/companiessuccess'); 
     }
 
     /**
